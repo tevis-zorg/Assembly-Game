@@ -59,6 +59,7 @@ const Body = () => {
   //   )
   // }
 
+  // Handle user clicked button
   const handleClicked = (letter) => {
 
     // setGuessedLetter(
