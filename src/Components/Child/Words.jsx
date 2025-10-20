@@ -1,0 +1,18 @@
+const Words = (props) => {
+
+    const arrLetter = props.arrLetter;
+
+    return (
+
+        <section className="current-word">
+
+            <span className="current-word-span">{props.currentWord}</span>
+
+        </section>
+
+
+
+    )
+}
+
+export default Words

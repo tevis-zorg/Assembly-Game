@@ -1,0 +1,23 @@
+ * {
+    box-sizing: border-box;
+}
+
+main {
+  max-width: 1280px;
+  padding: 2rem;
+  text-align: center;
+  justify-content: space-evenly;
+  background-color: #052222;
+  border-radius: 4px;
+}
+
+body {
+    margin: 0;
+    font-family: "Hanken Grotesk", Arial, sans-serif;
+    background-color: #b2a5a5;
+    color: #D9D9D9;
+    padding: 20px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}

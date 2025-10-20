@@ -1,0 +1,116 @@
+header {
+  margin-block: 30px;
+  padding: 10px;
+  text-align: center;
+  background-color:#0c87a3;
+  border-radius: 7px;
+}
+
+header > h1 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #f9f4da
+}
+
+header > p {
+    margin: 0 auto;
+    font-size: 0,875rem;
+    max-width: 350px;
+    /* color: #8e8e8e; */
+}
+
+.game-status {
+  padding: 10px;
+  align-items: center;
+  background-color: #0aab47;
+  /* color: #0000009c; */
+  border-radius: 7px;
+  white-space: nowrap;
+}
+
+.game-status h2 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.game-status  p {
+  font-size: 0.875rem;
+}
+
+section.language-chips {
+  /* background-color: antiquewhite; */
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 500px;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  border-radius: 7px;
+  padding-bottom: 36px;
+}
+
+span.chips{
+  margin: 3px;
+  padding: 4.5px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.current-word {
+  display: inline-flex;
+  padding: 0.80px;
+  /* background-color: #f9f4da; */
+  justify-content: center;
+  align-items: center;
+}
+
+.current-word-span{
+  display: flex;
+  width: 40px;
+  height: 40px;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  font-size: large;
+  font-weight: 600;
+  background-color: #181b19;
+  border-bottom: 2px solid #f9f4da;
+  border-radius: 3px;
+  text-align: center;
+}
+
+.v-keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  padding-top: 36px;
+  max-width: 550px;
+  gap: 10px;
+}
+
+.v-letter {
+  gap:5px;
+  width: 40px;
+  height: 40px;
+  font-size: large;
+  font-weight: 600;
+  background-color: #FCBA29;
+  border: #D7D7D7;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.new-game {
+    background-color: #11B5E5;
+    border: 1px solid #D7D7D7;
+    border-radius: 4px;
+    width: 225px;
+    height: 40px;
+    padding: 6px 12px;
+    display: block;
+    margin-inline: auto;
+    cursor: pointer;
+    font-weight: 500;
+}
