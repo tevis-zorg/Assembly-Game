@@ -1,4 +1,4 @@
-const Words = (props) => {
+const LetterGuessed = (props) => {
 
     const arrLetter = props.arrLetter;
 
@@ -15,4 +15,4 @@ const Words = (props) => {
     )
 }
 
-export default Words
+export default LetterGuessed

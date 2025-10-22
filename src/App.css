@@ -90,7 +90,7 @@ span.chips{
   gap: 10px;
 }
 
-.v-letter {
+section.v-keyboard > button.v-letter {
   gap:5px;
   width: 40px;
   height: 40px;
@@ -100,6 +100,22 @@ span.chips{
   border: #D7D7D7;
   border-radius: 5px;
   text-align: center;
+}
+
+/* section.v-keyboard > button.v-letter-wrong {
+  background-color: #ff6347;
+}
+
+section.v-keyboard > button.v-letter-right {
+  background-color: #0aab47;
+} */
+
+section.v-keyboard > button.wrong {
+  background-color: #ff6347;
+}
+
+section.v-keyboard > button.correct {
+  background-color: #0aab47;
 }
 
 .new-game {
