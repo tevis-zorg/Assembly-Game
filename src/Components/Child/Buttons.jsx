@@ -3,7 +3,7 @@ export const LetterKeyboard = (props) => {
         <button
             className={props.className}
             onClick={props.handleClick}
-            // disabled={props.selectedButton}
+            disabled={props.selectedButton}
         >
             {props.letter}
         </button>

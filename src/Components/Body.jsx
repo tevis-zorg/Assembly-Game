@@ -1,10 +1,10 @@
 // Thirt party import
-import { nanoid } from "nanoid"
+import { clsx } from 'clsx'
 
 // Child Components
 import GameStatus from './Child/GameStatus'
 import LanguageChips from "./Child/LanguageChips"
-import Words from "./Child/Words"
+import LetterGuessed from "./Child/LetterGuessed"
 import { LetterKeyboard } from "./Child/Buttons"
 
 // Custom Hook imports
@@ -22,15 +22,31 @@ const Body = () => {
   
   // const [assembly, setAssembly] = useShareKeyboard()
   const [chips, setChips] = useState(languages)
-  const [currentWord, setCurrentWord] = useState(Array.from("react"));
   const [guessedLetter, setGuessedLetter] = useState([])
+  const [currentWord, setCurrentWord] = useState(Array.from("react"));
+  const [isCorrect, setIsCorrect] = useState({})
+
+  // const [assemble, setAssemble] = useState(
+  //   {
+  //     guessedLetter : [],
+  //     currentWord : Array.from("react"),
+  //     isCorrect : false
+  //   }
+  // )
   
   const alphabet = Array.from(
     {length: 26}, (_,i) => String.fromCharCode(65 + i)
   )
 
   // console.log(currentWord);
-  console.log(guessedLetter);
+
+  /**
+   * Checks if the currentWord statements contains 
+   * the same object as the clicked keyboard
+   * if yes, turn the className from v-letter into v-letter-right
+   * (if it is right) otherwise v-letter-wrong; then disable the clicked button's
+   * after it is being clicked by the user;
+   */
 
 
 //   function letteGenerator (prosp) {
@@ -59,8 +75,12 @@ const Body = () => {
   //   )
   // }
 
+<<<<<<< HEAD
   // Handle user clicked button
   const handleClicked = (letter) => {
+=======
+  const addGuessedLetter = (letter) => {
+>>>>>>> c40123e (Adding button interaction value right/wrong letter)
 
     // setGuessedLetter(
     //   pervLetter => (
@@ -77,28 +97,64 @@ const Body = () => {
         return Array.from(letterSet)
       }
     )
+
+    const isValid = currentWord.includes(letter.toLowerCase());
+
+    setIsCorrect(
+      prevStat => (
+        {
+          ...prevStat,
+          [letter]: isValid
+        }
+      )
+    );
+
   }
+  
+  console.log(guessedLetter);
+  console.log(isCorrect)
+
+  
+
 
   const currWordElements = currentWord.map(
     (letter, index) => (
-      <Words
+      <LetterGuessed
         key={index}
         currentWord={letter.toUpperCase()}
-        handleChange={() => handleChange(letter)}
       />
     )
   )
 
   const buttonElement = alphabet.map(
-    (letter, index) => (
-      <LetterKeyboard
-        key={index}
-        className="v-letter"
-        handleClick={() => handleClicked(letter)}
-        // selectedButton={currentWord.includes(letter)}
-        letter={letter}
-      />
-    )
+    (letter, index) => {
+
+      const clickedLetter = guessedLetter.includes(letter)
+      const isCorrectLetter = isCorrect[letter]
+
+      const isLetterWrong = clsx(
+        'v-letter',
+        // {
+        //   "v-letter-right" : clickedLetter && isCorrectLetter === true,
+        //   "v-letter-wrong" : clickedLetter && isCorrectLetter === false,
+        // }
+        
+        {
+          correct : clickedLetter && isCorrectLetter === true,
+          wrong : clickedLetter && isCorrectLetter === false,
+        }
+      );
+
+      return(
+        <LetterKeyboard
+          key={index}
+          className={isLetterWrong}
+          handleClick={() => addGuessedLetter(letter)}
+          selectedButton={clickedLetter}
+          letter={letter}
+        />
+      )
+    }
   )
 
   return (
@@ -121,7 +177,7 @@ const Body = () => {
 
       <button 
         className="new-game"
-        onClick={() => setGuessedLetter([])}
+        onClick={() => setGuessedLetter([],console.clear())}
       >
           New Game
       </button>
