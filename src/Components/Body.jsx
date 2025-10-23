@@ -41,11 +41,9 @@ const Body = () => {
   // console.log(currentWord);
 
   /**
-   * Checks if the currentWord statements contains 
-   * the same object as the clicked keyboard
-   * if yes, turn the className from v-letter into v-letter-right
-   * (if it is right) otherwise v-letter-wrong; then disable the clicked button's
-   * after it is being clicked by the user;
+   * checks wheter clicked letter was the word inside the currentWord
+   * by assessing its truthty value. then if it is, relvealing the hidden
+   * word's;
    */
 
 
@@ -75,12 +73,8 @@ const Body = () => {
   //   )
   // }
 
-<<<<<<< HEAD
   // Handle user clicked button
-  const handleClicked = (letter) => {
-=======
   const addGuessedLetter = (letter) => {
->>>>>>> c40123e (Adding button interaction value right/wrong letter)
 
     // setGuessedLetter(
     //   pervLetter => (
@@ -118,16 +112,17 @@ const Body = () => {
 
 
   const currWordElements = currentWord.map(
-    (letter, index) => (
+    (letter) => (
       <LetterGuessed
-        key={index}
+        key={letter}
         currentWord={letter.toUpperCase()}
+        isRevealed={guessedLetter.includes(letter.toUpperCase())}
       />
     )
   )
 
   const buttonElement = alphabet.map(
-    (letter, index) => {
+    (letter) => {
 
       const clickedLetter = guessedLetter.includes(letter)
       const isCorrectLetter = isCorrect[letter]
@@ -147,7 +142,7 @@ const Body = () => {
 
       return(
         <LetterKeyboard
-          key={index}
+          key={letter}
           className={isLetterWrong}
           handleClick={() => addGuessedLetter(letter)}
           selectedButton={clickedLetter}

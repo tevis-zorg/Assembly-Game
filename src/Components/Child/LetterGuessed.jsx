@@ -6,7 +6,8 @@ const LetterGuessed = (props) => {
 
         <section className="current-word">
 
-            <span className="current-word-span">{props.currentWord}</span>
+            <span 
+                className="current-word-span">{props.isRevealed && props.currentWord}</span>
 
         </section>
 
