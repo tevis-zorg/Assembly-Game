@@ -53,8 +53,26 @@ span.chips{
   margin: 3px;
   padding: 4.5px;
   border-radius: 4px;
+  position: relative;
   white-space: nowrap;
 }
+
+/* Dimmed overlay with skull on "lost" languages */
+span.chips.lost::before {
+    content: "💀";
+    display:flex;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    background-color: #000000b3;
+}
+
 
 .current-word {
   display: inline-flex;
