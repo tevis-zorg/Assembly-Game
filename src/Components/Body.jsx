@@ -16,62 +16,53 @@ import { languages } from "../Datas/language"
 // Hooks
 import { useState } from "react"
 
+/**
+ * TODO :
+ * 
+ *  Clean up the code messes, comments,
+ *  and writes a consistent componenets usage 
+ *  ( by moving them into separate file ) and
+ *  think about moving all functions int
+ *  without neglecting source of truth. and tries to implements
+ *  sharing states which applying derived values.
+ *  if it is necessary yet effective,
+ *  move all the states and change it to become arr of state obj;
+ * 
+ */
+
 
 const Body = () => {
 
-  
-  // const [assembly, setAssembly] = useShareKeyboard()
+  // States
   const [chips, setChips] = useState(languages)
-  const [guessedLetter, setGuessedLetter] = useState([])
   const [currentWord, setCurrentWord] = useState(Array.from("react"));
+  const [guessedLetter, setGuessedLetter] = useState([])
   const [isCorrect, setIsCorrect] = useState({})
+  const [incorrectGuess, setIncorrectGuess] = useState(0)
 
-  // const [assemble, setAssemble] = useState(
-  //   {
-  //     guessedLetter : [],
-  //     currentWord : Array.from("react"),
-  //     isCorrect : false
-  //   }
-  // )
+  const chanceLeft = incorrectGuess;
+
+  // Dervied state value
+  const wrongGuess = 
+  guessedLetter.filter(
+    wrongLetter => !currentWord.includes(wrongLetter.toLowerCase())
+  ).length
+
   
+  // const [assemble, setAssemble] = useState(
+    //   {
+      //     guessedLetter : [],
+      //     currentWord : Array.from("react"),
+      //     isCorrect : false
+      //   }
+      // )
+      
+      
+  // Static value
+  // const heartLeft = 10 - chanceLeft;
   const alphabet = Array.from(
     {length: 26}, (_,i) => String.fromCharCode(65 + i)
   )
-
-  // console.log(currentWord);
-
-  /**
-   * checks wheter clicked letter was the word inside the currentWord
-   * by assessing its truthty value. then if it is, relvealing the hidden
-   * word's;
-   */
-
-
-//   function letteGenerator (prosp) {
-//     return Array(prosp.arrSize)
-//     .fill(0)
-//     .map(
-//         () => (
-//             {
-//                 id: nanoid,
-//                 value:
-//             }
-//         )
-//     )
-//   }
-
-  // const handleChange = (guessed) => {
-  //   const {value, name} = guessed.currentTarget;
-
-  //   setCurrentWord(
-  //     prevLetter => (
-  //       {
-  //         ...prevLetter,
-  //         [name]: value,
-  //       }
-  //     )
-  //   )
-  // }
 
   // Handle user clicked button
   const addGuessedLetter = (letter) => {
@@ -103,13 +94,13 @@ const Body = () => {
       )
     );
 
+    // !isValid ? setIncorrectGuess(prevChane => prevChane + 1) : incorrectGuess;
+
   }
   
-  console.log(guessedLetter);
-  console.log(isCorrect)
-
-  
-
+  // console.log(guessedLetter);
+  console.log(isCorrect);
+  // console.log(wrongGuess);
 
   const currWordElements = currentWord.map(
     (letter) => (
@@ -117,9 +108,9 @@ const Body = () => {
         key={letter}
         currentWord={letter.toUpperCase()}
         isRevealed={guessedLetter.includes(letter.toUpperCase())}
-      />
+        />
+      )
     )
-  )
 
   const buttonElement = alphabet.map(
     (letter) => {
@@ -162,6 +153,8 @@ const Body = () => {
 
       <LanguageChips
         arrData={chips}
+        wrongGuess={wrongGuess}
+        methodName={clsx}
       />
 
       {currWordElements}

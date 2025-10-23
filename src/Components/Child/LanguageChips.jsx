@@ -1,29 +1,45 @@
 const LanguageChips = (props) => {
 
-  const listData = props.arrData;
+    const listData = props.arrData;
+
+    
+    
+    const chipElement = listData.map(
+        (items, index) => {
+            
+            const ceased = index < props.wrongGuess
+
+            const style = {
+                backgroundColor: items.backgroundColor,
+                color: items.color
+                }
+
+            console.log(ceased)
+                
+            const chipLost = props.methodName(
+                'chips', ceased && 'lost'
+            )
+
+            return (
+
+                <span
+                key={items.name}
+                className={chipLost}
+                style={style}
+                >
+                {items.name}
+                </span>
+
+            )
+            
+        }
+    )
 
   return (
     <section className="language-chips">
 
         {
-            listData && listData.map(
-                (items) => (
-
-                        <span
-                        className="chips"
-                        key={items.name}
-                        style={
-                                {
-                                    backgroundColor: items.backgroundColor,
-                                    color: items.color
-                                }
-                            }   
-                        >
-                        {items.name}
-                        </span>
-
-                )
-            )
+            chipElement
         }
 
     </section>
