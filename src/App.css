@@ -22,14 +22,15 @@ header > p {
 .game-status {
   padding: 10px;
   align-items: center;
-  background-color: #c0cbc5;
+  background-color: #b70ec0;
   /* color: #0000009c; */
   border-radius: 7px;
   white-space: nowrap;
 }
 
 .game-status.chip-lost {
-  background-color: #FCBA29;
+  background-color: #edbb08;
+  color:#181b19
 }
 
 .game-status.game-lost {
@@ -41,7 +42,7 @@ header > p {
 }
 
 .game-status h2 {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 500;
 }
 
