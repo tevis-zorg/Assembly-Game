@@ -22,10 +22,22 @@ header > p {
 .game-status {
   padding: 10px;
   align-items: center;
-  background-color: #0aab47;
+  background-color: #c0cbc5;
   /* color: #0000009c; */
   border-radius: 7px;
   white-space: nowrap;
+}
+
+.game-status.chip-lost {
+  background-color: #FCBA29;
+}
+
+.game-status.game-lost {
+  background-color: #ff6347;
+}
+
+.game-status.game-win {
+  background-color: #0aab47;
 }
 
 .game-status h2 {

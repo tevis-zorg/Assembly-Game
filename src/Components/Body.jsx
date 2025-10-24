@@ -30,6 +30,20 @@ import { useState } from "react"
  * 
  */
 
+/**
+ * Challange :
+ * 
+ * Goal: Add in the incorrect guesses mechanism to the game
+ * 
+ * Challenge:
+ * 1. Create a variable `isGameOver` which evaluates to `true`
+ *    if the user has guessed incorrectly 8 times. Consider how
+ *    we might make this more dynamic if we were ever to add or
+ *    remove languages from the languages array.
+ * 2. Conditionally render the New Game button only if the game
+ *    is over.
+ */
+
 
 const Body = () => {
 
@@ -38,15 +52,20 @@ const Body = () => {
   const [currentWord, setCurrentWord] = useState(Array.from("react"));
   const [guessedLetter, setGuessedLetter] = useState([])
   const [isCorrect, setIsCorrect] = useState({})
-  const [incorrectGuess, setIncorrectGuess] = useState(0)
-
-  const chanceLeft = incorrectGuess;
 
   // Dervied state value
   const wrongGuess = 
   guessedLetter.filter(
     wrongLetter => !currentWord.includes(wrongLetter.toLowerCase())
-  ).length
+  ).length;
+
+  const rightGuess=
+  guessedLetter.filter(
+    isRight => currentWord.includes(isRight.toLowerCase())
+  ).length;
+
+  
+  const isGameOver = wrongGuess >= 8 || currentWord.length ===  rightGuess
 
   
   // const [assemble, setAssemble] = useState(
@@ -94,12 +113,14 @@ const Body = () => {
       )
     );
 
-    // !isValid ? setIncorrectGuess(prevChane => prevChane + 1) : incorrectGuess;
+  }
+
+  const gameOver = () => {
 
   }
   
   // console.log(guessedLetter);
-  console.log(isCorrect);
+  // console.log(isCorrect);
   // console.log(wrongGuess);
 
   const currWordElements = currentWord.map(
@@ -136,7 +157,7 @@ const Body = () => {
           key={letter}
           className={isLetterWrong}
           handleClick={() => addGuessedLetter(letter)}
-          selectedButton={clickedLetter}
+          selectedButton={isGameOver ? letter : clickedLetter}
           letter={letter}
         />
       )
@@ -149,12 +170,17 @@ const Body = () => {
       <GameStatus
        statMessages={"Farewell HTML & Css 🥱"}
        subMessages={"Welldone"}
+       moduleName={clsx}
+       wrongGuess={wrongGuess}
+       rightGuess={rightGuess}
+       guessedLetter={guessedLetter}
+       currentWord={currentWord}
       />
 
       <LanguageChips
         arrData={chips}
         wrongGuess={wrongGuess}
-        methodName={clsx}
+        moduleName={clsx}
       />
 
       {currWordElements}
@@ -163,12 +189,16 @@ const Body = () => {
         {buttonElement}
       </section>
 
+    {
+      isGameOver 
+      &&
       <button 
         className="new-game"
         onClick={() => setGuessedLetter([],console.clear())}
       >
           New Game
       </button>
+    }
 
 
     </>
