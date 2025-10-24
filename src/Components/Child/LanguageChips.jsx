@@ -7,7 +7,7 @@ const LanguageChips = (props) => {
     const chipElement = listData.map(
         (items, index) => {
             
-            const ceased = index < props.wrongGuess
+            const ceased = index < props.wrongGuess.length
 
             const style = {
                 backgroundColor: items.backgroundColor,

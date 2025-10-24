@@ -1,17 +1,20 @@
 const GameStatus = (props) => {
 
   const isWrongGuesses = props.wrongGuess;
-  const isRightGuesses = props.rightGuess;
+  const isChip = props.chips;
 
-  const chipLost = isWrongGuesses >= 1;
-  const isLost = isWrongGuesses >= 8;
-  const isWin = Array.from(props.currentWord).length === isRightGuesses;
+  const chipLost = isWrongGuesses.length > 0;
+  const isWin = props.isGameWon;
+  const isLost = props.isGameLost;
+  const langLost = isWrongGuesses.length > 0 ? isChip[isWrongGuesses.length - 1]?.name : null;
 
   console.log(
     `Chip Lost : ${chipLost}\nGame Lost : ${isLost}\nGame Win : ${isWin}`
   )
 
   return (
+    <>
+      {
         <section 
           className={
             props.moduleName(
@@ -25,13 +28,20 @@ const GameStatus = (props) => {
           }
         >
           <h2>
-            {props.statMessages}
+            { 
+              isWin? "You've won!" : ( chipLost? `Farewell ${langLost}` : null )
+            }
           </h2>
           <p>
-            {props.subMessages}
+            { 
+              isWin ? "Welldone!🍾" : 
+              ( isLost ? "You better start learning Assembly!☠️☠️☠️" : null )
+            }
           </p>
         </section>
-      // {statusElement}
+
+      }
+    </>
   )
 }
 
