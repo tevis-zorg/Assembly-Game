@@ -16,7 +16,7 @@ const LanguageChips = (props) => {
 
             console.log(ceased)
                 
-            const chipLost = props.methodName(
+            const chipLost = props.moduleName(
                 'chips', ceased && 'lost'
             )
 
