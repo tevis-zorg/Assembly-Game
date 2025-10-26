@@ -1,5 +1,6 @@
 // Thirt party import
 import { clsx } from 'clsx'
+import ReactConfetti from 'react-confetti'
 
 // Child Components
 import GameStatus from './Child/GameStatus'
@@ -16,32 +17,17 @@ import { languages } from "../Datas/language"
 // Hooks
 import { useState } from "react"
 
-/**
- * TODO :
- * 
- *  Clean up the code messes, comments,
- *  and writes a consistent componenets usage 
- *  ( by moving them into separate file ) and
- *  think about moving all functions int
- *  without neglecting source of truth. and tries to implements
- *  sharing states which applying derived values.
- *  if it is necessary yet effective,
- *  move all the states and change it to become arr of state obj;
- * 
- */
+// Utils
+import { getFarewellText } from '../Datas/utils'
 
 /**
- * Challange :
+ * Backlog:
  * 
- * Goal: Add in the incorrect guesses mechanism to the game
- * 
- * Challenge:
- * 1. Create a variable `isGameOver` which evaluates to `true`
- *    if the user has guessed incorrectly 8 times. Consider how
- *    we might make this more dynamic if we were ever to add or
- *    remove languages from the languages array.
- * 2. Conditionally render the New Game button only if the game
- *    is over.
+ * - Farewell messages in status section
+ * - Fix a11y issues
+ * - Make the new game button work
+ * - Choose a random word from a list of words
+ * - Confetti drop when the user wins
  */
 
 
@@ -49,7 +35,7 @@ const Body = () => {
 
   // States
   const [chips, setChips] = useState(languages)
-  const [currentWord, setCurrentWord] = useState(Array.from("react"));
+  const [currentWord, setCurrentWord] = useState(Array.from("react"))
   const [guessedLetter, setGuessedLetter] = useState([])
   const [isCorrect, setIsCorrect] = useState({})
 
@@ -57,28 +43,19 @@ const Body = () => {
   const wrongGuess = 
   guessedLetter.filter(
     wrongLetter => !currentWord.includes(wrongLetter.toLowerCase())
-  ).length;
+  )
 
   const rightGuess=
   guessedLetter.filter(
     isRight => currentWord.includes(isRight.toLowerCase())
-  ).length;
+  )
 
   
-  const isGameOver = wrongGuess >= 8 || currentWord.length ===  rightGuess
+  const isGameWon = currentWord.length === rightGuess.length
+  // const isGameWon = String(currentWord).split("").every(letter => guessedLetter.includes(letter))
+  const isGameLost = wrongGuess.length >= chips.length - 1
+  const isGameOver = isGameWon || isGameLost
 
-  
-  // const [assemble, setAssemble] = useState(
-    //   {
-      //     guessedLetter : [],
-      //     currentWord : Array.from("react"),
-      //     isCorrect : false
-      //   }
-      // )
-      
-      
-  // Static value
-  // const heartLeft = 10 - chanceLeft;
   const alphabet = Array.from(
     {length: 26}, (_,i) => String.fromCharCode(65 + i)
   )
@@ -114,14 +91,6 @@ const Body = () => {
     );
 
   }
-
-  const gameOver = () => {
-
-  }
-  
-  // console.log(guessedLetter);
-  // console.log(isCorrect);
-  // console.log(wrongGuess);
 
   const currWordElements = currentWord.map(
     (letter) => (
@@ -166,15 +135,25 @@ const Body = () => {
 
   return (
     <>
+    {
+      isGameWon
+      &&
+      <ReactConfetti/>
+    }
 
       <GameStatus
        statMessages={"Farewell HTML & Css 🥱"}
        subMessages={"Welldone"}
        moduleName={clsx}
-       wrongGuess={wrongGuess}
-       rightGuess={rightGuess}
+       chips={chips}
        guessedLetter={guessedLetter}
        currentWord={currentWord}
+       wrongGuess={wrongGuess}
+       rightGuess={rightGuess}
+       isGameWon={isGameWon}
+       isGameLost={isGameLost}
+       isGameOver={isGameOver}
+       getFarewellText={getFarewellText}
       />
 
       <LanguageChips
