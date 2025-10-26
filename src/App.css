@@ -19,34 +19,39 @@ header > p {
     /* color: #8e8e8e; */
 }
 
-.game-status {
+section.game-status {
   padding: 10px;
   align-items: center;
-  background-color: #b70ec0;
+  justify-content: center;
+  /* background-color: #b70ec0; */
   /* color: #0000009c; */
   border-radius: 7px;
+  min-height: 100px;
   white-space: nowrap;
+  margin-block: 30px;
+  font-weight: 400;
 }
 
-.game-status.chip-lost {
-  background-color: #edbb08;
+section.game-status.chip-lost {
+  background-color: #b70ec0;
+  justify-content: center;
   color:#181b19
 }
 
-.game-status.game-lost {
+section.game-status.game-lost {
   background-color: #ff6347;
 }
 
-.game-status.game-win {
+section.game-status.game-win {
   background-color: #0aab47;
 }
 
-.game-status h2 {
+section.game-status h2 {
   font-size: 1.2rem;
   font-weight: 500;
 }
 
-.game-status  p {
+section.game-status  p {
   font-size: 0.875rem;
 }
 
