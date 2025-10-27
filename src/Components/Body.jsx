@@ -23,10 +23,10 @@ import { getFarewellText } from '../Datas/utils'
 /**
  * Backlog:
  * 
- * - Farewell messages in status section
- * - Fix a11y issues
- * - Make the new game button work
+ * -✔️ Farewell messages in status section
+ * -✔️ Fix a11y issues
  * - Choose a random word from a list of words
+ * -✔️ Make the new game button work
  * - Confetti drop when the user wins
  */
 
@@ -126,12 +126,18 @@ const Body = () => {
           key={letter}
           className={isLetterWrong}
           handleClick={() => addGuessedLetter(letter)}
-          selectedButton={isGameOver ? letter : clickedLetter}
+          disabled={isGameOver ? letter : clickedLetter}
+          ariaDisabled={clickedLetter}
+          ariaLabel={`Letter ${letter}`}
           letter={letter}
         />
       )
     }
   )
+
+  const srOnlyHelper = currentWord.slice(" ").map(
+    letter => 
+        guessedLetter.includes(letter) ? letter + "." : "blank.").join(" ")
 
   return (
     <>
@@ -142,12 +148,9 @@ const Body = () => {
     }
 
       <GameStatus
-       statMessages={"Farewell HTML & Css 🥱"}
-       subMessages={"Welldone"}
        moduleName={clsx}
        chips={chips}
        guessedLetter={guessedLetter}
-       currentWord={currentWord}
        wrongGuess={wrongGuess}
        rightGuess={rightGuess}
        isGameWon={isGameWon}
@@ -166,6 +169,15 @@ const Body = () => {
 
       <section className="v-keyboard">
         {buttonElement}
+      </section>
+
+      <section 
+          className="sr-only" 
+          aria-live="polite" 
+          role="status"
+      >
+          <p>Current word: {srOnlyHelper}</p>
+      
       </section>
 
     {
