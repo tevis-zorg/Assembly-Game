@@ -3,30 +3,27 @@ import { getFarewellText } from "../../Datas/utils";
 const GameStatus = (props) => {
 
   const isGuessed = props.guessedLetter;
-  const isCurrent = props.currentWord;
   const isWrongGuesses = props.wrongGuess;
   const isChip = props.chips;
 
   const prevGuessed = isGuessed[isGuessed.length - 1]
-  const isChipLost = prevGuessed && !isCurrent.includes(prevGuessed)
+  const prevWrong = isWrongGuesses[isWrongGuesses.length - 1]
+  // const isChipLost = prevGuessed && !isCurrent.includes(prevGuessed)
   const farewellMsg = props.getFarewellText(isChip[isWrongGuesses.length - 1]?.name)
 
-  // const chipLost = isWrongGuesses.length > 0 && isWrongGuesses.length <= isChip.length;
+  const chipLost = isWrongGuesses.length > 0 && prevGuessed == prevWrong ;
   const isWin = props.isGameWon;
   const isLost = props.isGameLost;
   const isGameOver = props.isGameOver;
 
-  console.log(farewellMsg)
+  console.log(prevGuessed)
 
   function gameStatusMessage () {
-    if ( !isGameOver && isChipLost ) {
+    if ( !isGameOver && chipLost ) {
       return(
-        isWrongGuesses.length && isChipLost ?
         <h2>
-          {farewellMsg}
+          { farewellMsg }
         </h2>
-        :
-        null
 
       )
 
@@ -56,7 +53,7 @@ const GameStatus = (props) => {
   }
 
   console.log(
-    `Chip Lost : ${isChipLost}\nGame Lost : ${isLost}\nGame Win : ${isWin}`
+    `Chip Lost : ${chipLost}\nGame Lost : ${isLost}\nGame Win : ${isWin}`
   )
 
   return (
@@ -65,7 +62,7 @@ const GameStatus = (props) => {
         props.moduleName(
           'game-status',
           {
-            'chip-lost' : !isGameOver && isChipLost , 
+            'chip-lost' : chipLost , 
             'game-lost' : isLost,
             'game-win' : isWin,
           }

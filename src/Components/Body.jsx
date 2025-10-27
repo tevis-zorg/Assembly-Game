@@ -23,11 +23,13 @@ import { getFarewellText } from '../Datas/utils'
 /**
  * Backlog:
  * 
- * - Farewell messages in status section
- * - Fix a11y issues
- * - Make the new game button work
+ * - ✔️ Farewell messages in status section
+ * - ✔️ Fix a11y issues
+ * - ✔️ Make the new game button work
  * - Choose a random word from a list of words
- * - Confetti drop when the user wins
+ * - ✔️ Confetti drop when the user wins
+ * 
+ * Challenge : Disable the keyboard when the game is over
  */
 
 
@@ -147,9 +149,7 @@ const Body = () => {
        moduleName={clsx}
        chips={chips}
        guessedLetter={guessedLetter}
-       currentWord={currentWord}
        wrongGuess={wrongGuess}
-       rightGuess={rightGuess}
        isGameWon={isGameWon}
        isGameLost={isGameLost}
        isGameOver={isGameOver}
