@@ -14,7 +14,7 @@ const LanguageChips = (props) => {
                 color: items.color
                 }
 
-            console.log(ceased)
+            // console.log(ceased)
                 
             const chipLost = props.moduleName(
                 'chips', ceased && 'lost'
