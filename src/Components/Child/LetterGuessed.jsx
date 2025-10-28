@@ -1,15 +1,45 @@
 const LetterGuessed = (props) => {
 
-    const arrLetter = props.arrLetter;
-
+    const isCurrentWrods = props.currentWord;
+    const isGuessedLetter = props.guessedLetter;
+    const isUserLost = props.isGameLost;
+    
     return (
+        
+        <>
+            {
+                isCurrentWrods.split("").map(
+                    (letter, index) => {
 
-        <section className="current-word">
+                        const isLetter = letter.toUpperCase();
+                        const isRevealed = isGuessedLetter.includes(letter.toUpperCase())
+                        const shouldRevealed = isUserLost || isRevealed
+                        const clsName = props.classMethod(
+                            'current-word-span',
+                            isUserLost && !isRevealed && 'usr-lost'
+                        )
 
-            <span 
-                className="current-word-span">{props.isRevealed && props.currentWord}</span>
+                        return (
 
-        </section>
+                        <section 
+                        className="current-word"
+                        key={index}
+                        >
+                            <span 
+                                className={clsName}
+                            >
+                                {shouldRevealed ? isLetter : ""}
+                            </span>
+
+                        </section>
+
+                        )
+                    }
+                )
+            }
+        
+        </>
+
 
 
 

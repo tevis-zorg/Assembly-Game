@@ -1,13 +1,11 @@
 import { getFarewellText } from "../../Datas/utils";
 
 const GameStatus = (props) => {
-
-  const isGuessed = props.guessedLetter;
   const isWrongGuesses = props.wrongGuess;
   const isChip = props.chips;
 
-  const prevGuessed = isGuessed[isGuessed.length - 1]
-  const prevWrong = isWrongGuesses[isWrongGuesses.length - 1]
+  const prevGuessed = props.lastGuessedLetter
+  const prevWrong = props.lastWrongGuesses
   // const isChipLost = prevGuessed && !isCurrent.includes(prevGuessed)
   const farewellMsg = props.getFarewellText(isChip[isWrongGuesses.length - 1]?.name)
 
@@ -15,8 +13,6 @@ const GameStatus = (props) => {
   const isWin = props.isGameWon;
   const isLost = props.isGameLost;
   const isGameOver = props.isGameOver;
-
-  console.log(farewellMsg)
 
   function gameStatusMessage () {
     if ( !isGameOver && chipLost ) {

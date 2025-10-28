@@ -6,7 +6,7 @@ import ReactConfetti from 'react-confetti'
 import GameStatus from './Child/GameStatus'
 import LanguageChips from "./Child/LanguageChips"
 import LetterGuessed from "./Child/LetterGuessed"
-import { LetterKeyboard } from "./Child/Buttons"
+import { LetterKeyboard } from "./Child/LetterKeyboard"
 
 // Custom Hook imports
 import { useShareWord, useShareKeyboard } from "./States/States"
@@ -18,16 +18,18 @@ import { languages } from "../Datas/language"
 import { useState } from "react"
 
 // Utils
-import { getFarewellText } from '../Datas/utils'
+import { getFarewellText, getRandomWords } from '../Datas/utils'
 
 /**
  * Backlog:
  * 
  * -✔️ Farewell messages in status section
  * -✔️ Fix a11y issues
- * - Choose a random word from a list of words
+ * -✔️ Choose a random word from a list of words
  * -✔️ Make the new game button work
- * - Confetti drop when the user wins
+ * -✔️ Reveal what the word was if the user loses the game
+ * -✔️ Confetti drop when the user wins
+ * 
  */
 
 
@@ -35,26 +37,35 @@ const Body = () => {
 
   // States
   const [chips, setChips] = useState(languages)
-  const [currentWord, setCurrentWord] = useState(Array.from("react"))
+  const [currentWord, setCurrentWord] = useState(getRandomWords())
   const [guessedLetter, setGuessedLetter] = useState([])
   const [isCorrect, setIsCorrect] = useState({})
 
   // Dervied state value
+  const chipLeft = chips.length - 1;
   const wrongGuess = 
   guessedLetter.filter(
     wrongLetter => !currentWord.includes(wrongLetter.toLowerCase())
   )
 
-  const rightGuess=
-  guessedLetter.filter(
-    isRight => currentWord.includes(isRight.toLowerCase())
+  // const rightGuess=
+  // guessedLetter.filter(
+  //   isRight => currentWord.includes(isRight.toLowerCase())
+  // )
+
+  const rightGuess = 
+  currentWord.split("").every(
+    isRight => guessedLetter.includes(isRight.toUpperCase())
   )
 
   
-  const isGameWon = currentWord.length === rightGuess.length
-  // const isGameWon = String(currentWord).split("").every(letter => guessedLetter.includes(letter))
-  const isGameLost = wrongGuess.length >= chips.length - 1
+  // const isGameWon = currentWord.length === rightGuess.length
+  const isGameWon = rightGuess
+  const isGameLost = wrongGuess.length >= chipLeft
   const isGameOver = isGameWon || isGameLost
+
+  const lastGuessedLetter = guessedLetter[guessedLetter.length - 1]
+  const lastWrongGuesses = wrongGuess[wrongGuess.length - 1]
 
   const alphabet = Array.from(
     {length: 26}, (_,i) => String.fromCharCode(65 + i)
@@ -92,50 +103,12 @@ const Body = () => {
 
   }
 
-  const currWordElements = currentWord.map(
-    (letter) => (
-      <LetterGuessed
-        key={letter}
-        currentWord={letter.toUpperCase()}
-        isRevealed={guessedLetter.includes(letter.toUpperCase())}
-        />
-      )
-    )
+  const newGame = () => {
+    setGuessedLetter([],console.clear())
+    setCurrentWord(getRandomWords())
+  }
 
-  const buttonElement = alphabet.map(
-    (letter) => {
-
-      const clickedLetter = guessedLetter.includes(letter)
-      const isCorrectLetter = isCorrect[letter]
-
-      const isLetterWrong = clsx(
-        'v-letter',
-        // {
-        //   "v-letter-right" : clickedLetter && isCorrectLetter === true,
-        //   "v-letter-wrong" : clickedLetter && isCorrectLetter === false,
-        // }
-        
-        {
-          correct : clickedLetter && isCorrectLetter === true,
-          wrong : clickedLetter && isCorrectLetter === false,
-        }
-      );
-
-      return(
-        <LetterKeyboard
-          key={letter}
-          className={isLetterWrong}
-          handleClick={() => addGuessedLetter(letter)}
-          disabled={isGameOver ? letter : clickedLetter}
-          ariaDisabled={clickedLetter}
-          ariaLabel={`Letter ${letter}`}
-          letter={letter}
-        />
-      )
-    }
-  )
-
-  const srOnlyHelper = currentWord.slice(" ").map(
+  const srOnlyHelper = currentWord.split(" ").map(
     letter => 
         guessedLetter.includes(letter) ? letter + "." : "blank.").join(" ")
 
@@ -150,9 +123,9 @@ const Body = () => {
       <GameStatus
        moduleName={clsx}
        chips={chips}
-       guessedLetter={guessedLetter}
+       lastGuessedLetter={lastGuessedLetter}
+       lastWrongGuesses={lastWrongGuesses}
        wrongGuess={wrongGuess}
-       rightGuess={rightGuess}
        isGameWon={isGameWon}
        isGameLost={isGameLost}
        isGameOver={isGameOver}
@@ -165,17 +138,34 @@ const Body = () => {
         moduleName={clsx}
       />
 
-      {currWordElements}
+      <LetterGuessed
+        classMethod={clsx}
+        currentWord={currentWord}
+        guessedLetter={guessedLetter}
+        isGameLost={isGameLost}
+      />
 
-      <section className="v-keyboard">
-        {buttonElement}
-      </section>
+      <LetterKeyboard
+        alphabet={alphabet}
+        classMethod={clsx}
+        handleClick={ addGuessedLetter }
+        guessedLetter={guessedLetter}
+        isCorrect={isCorrect}
+        isGameOver={isGameOver}
+      />
 
       <section 
           className="sr-only" 
           aria-live="polite" 
           role="status"
       >
+          <p>
+              {currentWord.includes(lastGuessedLetter) ? 
+                  `Correct! The letter ${lastGuessedLetter} is in the word.` : 
+                  `Sorry, the letter ${lastGuessedLetter} is not in the word.`
+              }
+              You have {chipLeft} attempts left.
+          </p>
           <p>Current word: {srOnlyHelper}</p>
       
       </section>
@@ -185,7 +175,7 @@ const Body = () => {
       &&
       <button 
         className="new-game"
-        onClick={() => setGuessedLetter([],console.clear())}
+        onClick={ isGameOver && newGame }
       >
           New Game
       </button>

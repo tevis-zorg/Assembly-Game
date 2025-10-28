@@ -111,8 +111,14 @@ span.chips.lost::before {
   font-weight: 600;
   background-color: #181b19;
   border-bottom: 2px solid #f9f4da;
+  color: #0aab47;
   border-radius: 3px;
   text-align: center;
+}
+
+.current-word-span.usr-lost{
+  color: #730404;
+  /* opacity: 1.5; */
 }
 
 .v-keyboard {
